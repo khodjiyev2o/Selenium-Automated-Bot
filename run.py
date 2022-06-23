@@ -1,3 +1,7 @@
-from booking.OLX import login
+from project.booking import Booking
 
-login()
+with Booking() as bot:
+    bot.land_first_page()
+
+
+
