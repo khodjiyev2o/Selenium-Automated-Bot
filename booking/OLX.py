@@ -26,7 +26,8 @@ def login():
 
     username.send_keys('202112120')
     password.send_keys('Samandar2021!')
-    btn = driver.find_element_by_xpath('//*[@id="region-main"]/div/div/div/div[1]/div[1]/div[2]/form/div[2]/input')
+    btn = driver.find_element_by_css_selector('input[name="loginbutton"]')
+    #btn = driver.find_element_by_xpath('//*[@id="region-main"]/div/div/div/div[1]/div[1]/div[2]/form/div[2]/input')
     btn.click()
 
 
@@ -50,4 +51,4 @@ def logout():
 
 
 login()
-logout()
+
