@@ -1,7 +1,9 @@
 import project.constants as const
 from project.filtration import BookingFiltration
+from project.results_presentation import Results
 import os
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from prettytable import PrettyTable
@@ -20,7 +22,7 @@ class Booking(webdriver.Chrome):
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         super(Booking, self).__init__(options=options)
         self.implicitly_wait(15)
-        self.big_div = self.find_big_div()
+
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.teardown:
@@ -61,33 +63,22 @@ class Booking(webdriver.Chrome):
             pass
 
         search_btn = self.find_element_by_css_selector('button[data-sb-id="main"]')
+        WebDriverWait(self, 20).until(
+            EC.element_to_be_clickable(search_btn)
+        )
         search_btn.click()
 
     def apply_filtrations(self):
         filtration = BookingFiltration(driver=self)
         filtration.price_filter()
 
-    def find_big_div(self):
-        big_div = self.find_elements_by_css_selector('div[data-testid="property-card"]')
-        return big_div
-
-    def show_results(self):
-        hotels_data = []
-        for div in self.big_div:
-            hotel_name = div.find_element_by_css_selector(
-                'div[data-testid="title"]'
-            ).get_attribute('innerHTML').strip()
-            hotel_price = div.find_element_by_class_name(
-                'b5cd09854e d10a6220b4'
-            ).get_attribute('innerHTML').strip()
-            hotel_score = div.find_element_by_class_name(
-                'b5cd09854e d10a6220b4'
-            ).get_attribute('innerHTML').strip()
-            hotels_data.append([hotel_name,hotel_price,hotel_score])
+    def report_results(self):
+        hotels_container = self.find_element_by_css_selector('div[class="d4924c9e74"]')
+        results_presentation = Results(driver=self,hotels_container=hotels_container)
         table = PrettyTable(
             field_names=["Hotel Name", "Hotel Price", "Hotel Score"]
         )
-        table.add_rows(hotels_data)
+        table.add_rows(results_presentation.show_results())
         print(table)
 
     def change_language(self,language='en-us'):
