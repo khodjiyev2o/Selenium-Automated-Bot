@@ -8,7 +8,9 @@ with Booking() as bot:
         check_out_date = input("Enter check-out date.For example:2022-06-25\n"),
         guest_count = int(input("How many adults in total? \n"))
     )
-
+    bot.apply_filtrations()
+    bot.refresh()
+    bot.show_results()
 
 
 
