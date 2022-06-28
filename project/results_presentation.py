@@ -4,8 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 class Results:
-    def __init__(self,driver:WebDriver, hotels_container:WebElement,):
+    def __init__(self, driver: WebDriver, hotels_container: WebElement, ):
         self.driver = driver
         self.hotels_container = hotels_container
         self.hotel_list = self.hotel_list()
@@ -18,17 +19,12 @@ class Results:
     def show_results(self):
         hotels_data = []
         for div in self.hotel_list:
-
             WebDriverWait(self.driver, 20).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR,'div[data-testid="title"]' ))
-             )
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'div[data-testid="title"]'))
+            )
             hotel_name = div.find_element_by_css_selector(
                 'div[data-testid="title"]'
             ).get_attribute('innerHTML').strip()
-
-
-
-
 
             WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, "bd73d13072"))
@@ -36,10 +32,7 @@ class Results:
             price = div.find_element_by_class_name(
                 'bd73d13072'
             ).get_attribute('innerHTML').strip()
-            hotel_price =  price[9:] + price[0:3]
-
-
-
+            hotel_price = price[9:] + price[0:3]
 
             WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, "bd73d13072"))
