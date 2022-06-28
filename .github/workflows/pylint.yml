@@ -1,6 +1,6 @@
 name: Super-Linter
 env:
-  'GITHUB_SHA_KEY': ${{github.sha}}
+  'GITHUB_SHA_KEY': '${{github.sha}}'
 
 on:
   push:
