@@ -24,7 +24,11 @@ jobs:
               needs: [my_testing]
               
               steps:
-                  - name: Directory pick
+                  - name: Empty Directory pick
                     run: ls -la
-    
+                    
+                  - name: Uploading directory 
+                    uses: actions/checkout@v1
+                  - name: Showing directory
+                    run: ls -la
  
