@@ -1,6 +1,6 @@
 name: Super-Linter
 env:
-  GITHUB_SHA_KEY: '${{ github.sha }}'
+  GITH: "this is ${{ github.sha }}"
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       - name: Print hello world
         run: |
           echo "Hello world" 
-          echo "this is a github sha key: " ${{GITHUB_SHA_KEY}}
+          echo "this is a github sha key: " ${{GITH}}
 
 
 
