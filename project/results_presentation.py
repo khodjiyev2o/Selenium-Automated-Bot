@@ -7,9 +7,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 class Results:
     def __init__(
-            self,
-            driver: WebDriver,
-            hotels_container: WebElement,
+        self,
+        driver: WebDriver,
+        hotels_container: WebElement,
     ):
         self.driver = driver
         self.hotels_container = hotels_container
@@ -31,9 +31,9 @@ class Results:
                 )
             )
             hotel_name = (
-                div.find_element_by_css_selector('div[data-testid="title"]').
-                    get_attribute('innerHTML')
-                    .strip()
+                div.find_element_by_css_selector('div[data-testid="title"]')
+                .get_attribute('innerHTML')
+                .strip()
             )
 
             WebDriverWait(self.driver, 20).until(
@@ -41,8 +41,8 @@ class Results:
             )
             price = (
                 div.find_element_by_class_name('bd73d13072')
-                    .get_attribute('innerHTML')
-                    .strip()
+                .get_attribute('innerHTML')
+                .strip()
             )
             hotel_price = price[9:] + price[0:3]
 
@@ -51,8 +51,8 @@ class Results:
             )
             hotel_score = (
                 div.find_element_by_class_name('d10a6220b4')
-                    .get_attribute('innerHTML')
-                    .strip()
+                .get_attribute('innerHTML')
+                .strip()
             )
             hotels_data.append([hotel_name, hotel_price, hotel_score])
         return hotels_data

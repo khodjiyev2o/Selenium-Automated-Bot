@@ -4,12 +4,9 @@ import project.constants as const
 from prettytable import PrettyTable
 from project.filtration import BookingFiltration
 from project.results_presentation import Results
-
 from selenium import webdriver
-
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-
 
 
 class Booking(webdriver.Chrome):
