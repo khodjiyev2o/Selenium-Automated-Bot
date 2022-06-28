@@ -1,9 +1,12 @@
 name: Super-Linter
+env:
+  GITHUB_SHA_KEY: ${{github.sha}}
 
 on:
   push:
     branches:
       - main
+        
 
 jobs:
   my_testing:
@@ -11,8 +14,9 @@ jobs:
     
     steps:
       - name: Print hello world
-        run: echo "Hello world" 
-  
+        run: |
+          echo "Hello world" 
+          echo "this is a github sha key: " ${{GITHUB_SHA_KEY}}
 
 
 
