@@ -16,7 +16,7 @@ jobs:
       - name: Print hello world
         run: |
           echo "Hello world" 
-          echo "this is a github sha key: " ${{GITH}}
+          echo "this is a github sha key: " ${{env.GITH}}
 
 
 
