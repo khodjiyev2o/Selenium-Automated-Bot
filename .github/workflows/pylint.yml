@@ -40,7 +40,7 @@ jobs:
         steps:
         
           - name: Zip file
-            run: zip "my_file.zip" ./ 
+            run: zip -r "my_file.zip" ./ 
         
         
  
