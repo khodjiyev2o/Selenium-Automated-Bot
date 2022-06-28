@@ -1,6 +1,6 @@
 name: Super-Linter
 env:
-  GITH: "this is ${{ github.sha }}"
+  GITH: ${{ github.sha }}
 
 on:
   push:
