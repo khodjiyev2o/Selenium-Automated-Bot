@@ -1,7 +1,7 @@
 name: Super-Linter
 env:
-  GITH: ${{ github.sha }}
-
+  'GITH': ${{ github.sha }}
+  
 on:
   push:
     branches:
