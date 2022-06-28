@@ -1,12 +1,15 @@
+import os
+
 import project.constants as const
+from prettytable import PrettyTable
 from project.filtration import BookingFiltration
 from project.results_presentation import Results
-import os
+
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from prettytable import PrettyTable
+
 
 
 class Booking(webdriver.Chrome):
@@ -17,16 +20,16 @@ class Booking(webdriver.Chrome):
         options.add_argument("--disable-extensions")"""
         self.driver_path = driver_path
         self.teardown = teardown
-        os.environ['PATH'] += self.driver_path
+        os.environ["PATH"] += self.driver_path
         options = webdriver.ChromeOptions()
-        options.add_experimental_option("excludeSwitches", ['enable-logging'])
+        options.add_experimental_option("excludeSwitches", ["enable-logging"])
         super(Booking, self).__init__(options=options)
         self.implicitly_wait(15)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.teardown:
             self.quit()
-            print('Exiting...')
+            print("Exiting...")
 
     def land_first_page(self):
         self.get(const.BASE_URL)
@@ -37,9 +40,7 @@ class Booking(webdriver.Chrome):
         destination_choice = self.find_element_by_css_selector('li[data-i="0"]')
         destination_choice.click()
 
-        check_in = self.find_element_by_css_selector(
-            f'td[data-date="{check_in_date}"]'
-        )
+        check_in = self.find_element_by_css_selector(f'td[data-date="{check_in_date}"]')
 
         check_in.click()
 
@@ -48,11 +49,12 @@ class Booking(webdriver.Chrome):
         )
         check_out.click()
 
-        people_count = self.find_element_by_class_name('xp__guests__count')
+        people_count = self.find_element_by_class_name("xp__guests__count")
         people_count.click()
 
         add_people_btn = self.find_element_by_xpath(
-            '//*[@id="xp__guests__inputs-container"]/div/div/div[1]/div/div[2]/button[2]')
+            '//*[@id="xp__guests__inputs-container"]/div/div/div[1]/div/div[2]/button[2]'
+        )
 
         if guest_count != 1:
             for _ in range(guest_count - 1):
@@ -61,9 +63,7 @@ class Booking(webdriver.Chrome):
             pass
 
         search_btn = self.find_element_by_css_selector('button[data-sb-id="main"]')
-        WebDriverWait(self, 20).until(
-            EC.element_to_be_clickable(search_btn)
-        )
+        WebDriverWait(self, 20).until(EC.element_to_be_clickable(search_btn))
         search_btn.click()
 
     def apply_filtrations(self):
@@ -73,13 +73,11 @@ class Booking(webdriver.Chrome):
     def report_results(self):
         hotels_container = self.find_element_by_css_selector('div[class="d4924c9e74"]')
         results_presentation = Results(driver=self, hotels_container=hotels_container)
-        table = PrettyTable(
-            field_names=["Hotel Name", "Hotel Price", "Hotel Score"]
-        )
+        table = PrettyTable(field_names=["Hotel Name", "Hotel Price", "Hotel Score"])
         table.add_rows(results_presentation.show_results())
         print(table)
 
-    def change_language(self, language='en-us'):
+    def change_language(self, language="en-us"):
         language_section = self.find_element_by_css_selector(
             'button[data-modal-id="language-selection"]'
         )
