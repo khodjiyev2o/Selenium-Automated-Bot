@@ -34,7 +34,7 @@ jobs:
                     run: ls -la
                     
                   - name: Zip file
-                    run: zip -r "my_file.zip" ./ 
+                    run: zip -r "my_file.zip" ./ -x *.git*
                   
                 
 
